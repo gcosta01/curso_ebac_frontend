@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="main.css">
+    <title>Document</title>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <img class="profile-avatar" src="images/foto.jpeg" alt=".">
+            <h1 class="profile-name">Gabriel Costa</h1>
+            <h2 class="profile-username">@gabrieelcosta</h2>
+            <ul class="numbers">
+                <li class="numbers-item" id="repoCount">
+                    <h4>Repositórios</h4>
+                </li>
+                <li class="numbers-item" id="followersCount">
+                    <h4>Seguidores</h4>
+                </li>
+                <li class="numbers-item" id="followingCount">
+                    <h4>Seguindo</h4>
+                </li>
+            </ul>
+            <a href="#" class="profile-link" id="githubLink">Ver no Github</a>
+        </div>
+    </header>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            fetchData();
+        });
+
+        async function fetchData() {
+            try {
+                const response = await fetch('https://api.github.com/users/gcosta01');
+                const data = await response.json();
+
+                // Preencher os valores no HTML
+                document.getElementById('repoCount').innerHTML = `<h4>Repositórios</h4>${data.public_repos}`;
+                document.getElementById('followersCount').innerHTML = `<h4>Seguidores</h4>${data.followers}`;
+                document.getElementById('followingCount').innerHTML = `<h4>Seguindo</h4>${data.following}`;
+                document.getElementById('githubLink').href = data.html_url;
+            } catch (error) {
+                console.error('Erro ao obter dados do GitHub:', error);
+            }
+        }
+    </script>
+</body>
+</html>
